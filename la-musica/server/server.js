@@ -7,7 +7,7 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-app.post("./login", (req, res) => {
+app.post("/login", (req, res) => {
   const code = req.body.code;
   const spotifyApi = new SpotifyWebApi({
     redirectUri: "http://localhost:3000/",
@@ -17,6 +17,7 @@ app.post("./login", (req, res) => {
   spotifyApi
     .authorizationCodeGrant(code)
     .then((data) => {
+      console.log(data);
       res.json({
         accessToken: data.body.access_Token,
         refreshToken: data.body.refresh_Token,
@@ -24,7 +25,8 @@ app.post("./login", (req, res) => {
       });
     })
     .catch((err) => {
-      res.sendStatus(err);
+      console.log("authorizationCodeGrant", err);
+      res.sendStatus(400);
       console.error("Spotify authorization error, please check login info.");
     });
 });
