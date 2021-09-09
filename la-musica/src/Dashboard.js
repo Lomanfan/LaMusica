@@ -90,7 +90,7 @@ export default function Dashboard({ code }) {
             chooseTrack={chooseTrack}
           />
         ))}
-        {!searchResults && (
+        { searchResults.length === 0 && (
           <div className="text-center" style={{ whiteSpace: "pre"}}>
             {lyrics}
           </div>
